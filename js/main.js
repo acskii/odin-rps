@@ -106,7 +106,11 @@ function playGame() {
         }
         roundsPlayed++;
     }
-    displayMessage(`GAME WINNER: ${(humanScore > computerScore) ? "You" : "Computer"}!`);
+    displayMessage(`
+        GAME WINNER: ${(humanScore > computerScore) ? "You" : "Computer"}!
+        Your Score: ${humanScore}
+        Computer Score: ${computerScore}
+    `);
 }
 
 playGame();
