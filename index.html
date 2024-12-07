@@ -4,17 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock, Paper, Scissors!</title>
-    <style>
-        h1 {
-            text-align: center;
-            font-size: 42px;
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    <script src="./js/main.js"></script>
+    <div class="container">
+        <h1>Rock, Paper, Scissors!</h1>
+        <div class="scores">
+            <div class="score-block">
+                <h3>Your Score: </h3>
+                <h3 class="score-count" id="human-score">0</h3>
+            </div>
+            <div class="score-block">
+                <h3>Bot Score: </h3>
+                <h3 class="score-count" id="bot-score">0</h3>
+            </div>
+        </div>
+        <div class="controls">
+            <button type="button" id="rock">Rock</button>
+            <button type="button" id="paper">Paper</button>
+            <button type="button" id="scissors">Scissors</button>
+        </div>
+        <div class="results"></div>
+    </div>
+    <!-- <script src="./js/main.js"></script> -->
 </body>
 </html>
