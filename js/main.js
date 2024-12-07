@@ -1,6 +1,14 @@
+const controlsDiv = document.querySelector("#controls");
+let computerScore = 0;
+let humanScore = 0; 
+
 function displayMessage(msg) {
+    const resultConsole = document.querySelector("#results");
+    const msgElement = document.createElement("p");
+    msgElement.textContent = msg;
+    resultConsole.appendChild(msgElement);
     console.log(msg);
-    alert(msg);
+    
 }
 
 function getComputerChoice() {
@@ -23,94 +31,63 @@ function getComputerChoice() {
 //     console.log(getComputerChoice());
 // }
 
-function validateChoice(humanChoice) {
-    const choice = (humanChoice || "").toLowerCase()    // If null
+function updateScores(humanScore, computerScore) {
+    const humanScoreElement = document.querySelector("#human-score");
+    const botScoreElement = document.querySelector("#bot-score");
 
-    return (
-        (choice === 'rock') ||
-        (choice === 'paper') ||
-        (choice === 'scissors')
-    );
+    humanScoreElement.textContent = humanScore;
+    botScoreElement.textContent = computerScore;
 }
 
-function printHumanChoice(humanChoice) {
-    if (validateChoice(humanChoice)) {
-        displayMessage(`You entered: ${humanChoice}`);
+function playRound(humanChoice) {
+    // Check if game is still running
+    if (humanScore < 5 && computerScore < 5) {
+        displayMessage(`You chose: ${humanChoice}`);
+        const computerChoice = getComputerChoice();
+        // Check that both choices are given
+        // console.assert(humanChoice && computerChoice, `Round: ${humanChoice ? "computer choice": "human choice"} is null`);
+
+        // Compare choices based on game rules
+        if (
+            (humanChoice === 'rock' && computerChoice === 'scissors') || 
+            (humanChoice === 'scissors' && computerChoice === 'paper') ||
+            (humanChoice === 'paper' && computerChoice === 'rock')
+        ) {
+            // Human wins
+            displayMessage(`You win: ${humanChoice} beats ${computerChoice}`);
+            humanScore++;
+        } else if (humanChoice === computerChoice) {
+            // Tie
+            displayMessage(`Tie: Both played ${humanChoice}`);
+        } else {
+            // Computer wins
+            displayMessage(`You lose: ${computerChoice} beats ${humanChoice}`);
+            computerScore++;
+        }
+        updateScores(humanScore, computerScore);
+        return ((humanScore < 5 && computerScore < 5) ? 1 : 0);    // Can still start another round
     } else {
-        displayMessage(`Invalid choice entered: ${humanChoice}`);
-    }
-}
-
-function getHumanChoice() {
-    let choice;
-
-    do {
-        choice = prompt(`
-            Choose your move: 
-                Rock,
-                Paper,
-                Scissors.    
-            Your move:  
-        `);
-        printHumanChoice(choice);
-    } while (!validateChoice(choice)) 
-
-    return choice.toLowerCase();
-}
-
-function playRound(humanChoice, computerChoice) {
-    // Check that both choices are given
-    console.assert(humanChoice && computerChoice, `Round: ${humanChoice ? "computer choice": "human choice"} is null`);
-
-    // Compare choices based on game rules
-    if (
-        (humanChoice === 'rock' && computerChoice === 'scissors') || 
-        (humanChoice === 'scissors' && computerChoice === 'paper') ||
-        (humanChoice === 'paper' && computerChoice === 'rock')
-    ) {
-        // Human wins
-        displayMessage(`You win: ${humanChoice} beats ${computerChoice}`);
-        return 1;
-    } else if (humanChoice === computerChoice) {
-        // Tie
-        displayMessage(`Tie: Both played ${humanChoice}`);
-    } else {
-        // Computer wins
-        displayMessage(`You lose: ${computerChoice} beats ${humanChoice}`);
-        return 0;
+        return 0;    // Rounds ended
     }
 }        
 
-function playGame() {
-    let roundsPlayed = 0;
-    let computerScore = 0;
-    let humanScore = 0; 
-
-    displayMessage(`
-        WELCOME TO ROCK, PAPER, SCISSORS!
-
-        >> GAME WILL RUN FOR 5 ROUNDS! <<
-        <<          GOOD LUCK          >>
-    `);
-
-    while (roundsPlayed < 5) {
-        const computerChoice = getComputerChoice();
-        const humanChoice = getHumanChoice();
-
-        const humanWon = playRound(humanChoice, computerChoice);
-
-        if (humanWon) {
-            humanScore++;
-        } else {
-            computerScore++;
-        }
-        roundsPlayed++;
+function listenHumanChoice(event) {
+    switch (event.target.id) {
+        case 'rock':
+        case 'paper':
+        case 'scissors':
+            if (!playRound(event.target.id)) {
+                displayMessage(`GAME WINNER: ${(humanScore > computerScore) ? "You" : "Computer"}!`);
+                displayMessage(`REFRESH TO PLAY AGAIN!`);
+                controlsDiv.removeEventListener('click', listenHumanChoice, false);
+            }
+            break;
     }
-    displayMessage(`
-        GAME WINNER: ${(humanScore > computerScore) ? "You" : "Computer"}!
-        Your Score: ${humanScore}
-        Computer Score: ${computerScore}
-    `);
 }
 
-playGame();
+// Game starts
+displayMessage(`WELCOME TO ROCK, PAPER, SCISSORS!`);
+
+// Round is only when the player chooses their move
+// click event delegation
+controlsDiv.addEventListener('click', listenHumanChoice);

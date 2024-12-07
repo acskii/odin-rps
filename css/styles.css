@@ -15,12 +15,21 @@ body {
     padding: 16px;
 }
 
-h1, .controls, .results, .score-block, .score-count {
+h1, #controls, #results, .score-block, .score-count, .credits {
     background: linear-gradient(180deg, #09e07f, #09e05f);
     padding: 8px;
     border-radius: 5px;
     margin: 0;
     border: 2px solid white;
+}
+
+.credits {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .score-block {
@@ -37,7 +46,7 @@ h3 {
     margin: 0;
 }
 
-.controls {
+#controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -56,9 +65,21 @@ button {
     border: 2px solid white;
 }
 
-.results {
-    padding: 16px;
+#results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 50px;
+    gap: 8px;
+    padding: 16px;
+}
+
+#results p {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    color: white;
+    font-weight: 700;
 }
 
 .scores {
