@@ -1,48 +1,39 @@
 ## Rock, Paper, Scissors
 A simple game of rock, paper, scissors!
 
-## Notice
-I tried outputing messages to the console, but `prompt()` for some reason runs first and blocks out
-all console logs until it disappears (which is at the end of the game).
-Therefore, all game messages are output through `alert()` instead.
-
-## Pseudocode
+## Planning
 > [!NOTE]
-> _I tried planning it_
+> This was carried out as a way to practice planning skills neccessary in any project on this simpler one.
+
+### [1] Layout:
+> [!NOTE]
+> Example design to show main components.
+
+<img src="./layout.png" width="400px">
+
+### [2] Idea:
+- Game runs until one of the players reaches 5 points.
+- User can choose between the choices on the screen.
+- Based on rules, winner of the round is determined.
+- Scores updated.
+- Round messages are displayed.
+
+### [3] Pseudocode:
 
 ### General
 ```
-01 Print out instructions
-02 Start a new round
-03 Generate a random choice between 'rock', 'paper', and 'scissors'
-04 Get user input from one of previous three choices
-05 Compare the two choices
-06 Determine the winner based on rules
-07 Rules: 
-..    1 'rock' beats 'scissors'
-..    2 'scissors' beats 'paper'
-..    3 'paper' beats 'rock'
-..    4  same choice is a tie
-08 Print out winner
-09 Increment winner score
-10 Repeat 02 until 5 rounds are played
-11 Print winner and scores
-12 End program
-```
-
-### For Step [02]
-```
-01 Receive both human choice and computer choice
-02 Compare both choices
-03 Determine winner based on rules
-..    1 'rock' beats 'scissors'
-..    2 'scissors' beats 'paper'
-..    3 'paper' beats 'rock'
-..    4  same choice is a tie
-04 Print out result
-05 If winner is determined, increment winner score
-06 If tie, continue
-07 End round
+01 Display initial scores
+02 Detect human choice
+02 Generate computer choice
+04 Compare choices and determine winner based on:
+..    'rock' beats 'scissors'
+..    'paper' beats 'rock'
+..    'scissors' beats 'paper'
+05 Update scores
+06 Display results
+07 Repeat 02 until one of scores is equal to 5
+08 Display winner
+09 End game      
 ```
 
 ### For Step [03]
@@ -53,26 +44,4 @@ Therefore, all game messages are output through `alert()` instead.
 .. 2 is 'paper'
 .. 3 is 'scissors'
 03 Return choice
-```
-
-### For Step [04]
-```
-01 Print prompt
-02 Get input
-03 Lower case of input
-04 Match input to one of choices
-.. 'rock'
-.. 'paper'
-.. 'scissors'
-04 If none match, return null
-05 Otherwise, return matched
-```
-
-### For Step [10]
-```
-01 Create roundsPlayed int variable, initialised to 0 
-02 Receive both human choice and computer choice
-03 Start a new round
-04 Repeat 02 until roundsPlayed == 5
-05 Print overall game winner
 ```
